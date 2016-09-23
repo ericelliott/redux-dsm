@@ -54,3 +54,14 @@ const foo = dsm({
     "myComponent::FETCH_FOO::HANDLE_SUCCESS",
   ]
 ```
+
+## State
+
+The state object will have two keys, `status`, `data`.
+
+The `data` object will have a `type`, and:
+
+* In the case of no data, no additional props
+* If data exists, it will have a `value` prop with the value payload
+* If the type is `error`, it will have an `error` prop with the error details
+
