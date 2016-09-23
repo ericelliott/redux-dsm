@@ -1,6 +1,6 @@
 # Dream code + API noodling
 
-```
+```js
 // ['action', 'next state',
 //   ['scoped action', 'another state']
 // ]
