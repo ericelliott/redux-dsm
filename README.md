@@ -32,7 +32,8 @@ const fetchingStates = [
   ]
 ];
 
-// ({ actionStates: Array, component?: String, name?: String, delimiter?: String }) => { Actions, ActionCreators, Reducer }
+// ({ actionStates: Array, component?: String, name?: String, delimiter?: String }) =>
+//   { actions: Array, ActionCreators: Object, Reducer: Function }
 const foo = dsm({
   component: 'myComponent',
   name: 'fetch foo',
