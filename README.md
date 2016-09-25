@@ -57,7 +57,7 @@ const foo = dsm({
 
 ## State
 
-The state object will have two keys, `status`, `data`.
+The state object will have two keys, `status`, `data`. In the example above, `status` will be one of `idle`, `fetching`, `error`, or `success`.
 
 The `data` object will have a `type`, and:
 
