@@ -21,7 +21,7 @@ import dsm from 'redux-dsm';
 const fetchingStates = [
   ['initialize', 'idle',
     ['fetch', 'fetching',
-      ['cancel', 'idle']
+      ['cancel', 'idle'],
       ['report error', 'error',
         ['handle error', 'idle']
       ],
@@ -51,7 +51,7 @@ const foo = dsm({
     "myComponent::FETCH_FOO::REPORT_ERROR",
     "myComponent::FETCH_FOO::HANDLE_ERROR",
     "myComponent::FETCH_FOO::REPORT_SUCCESS",
-    "myComponent::FETCH_FOO::HANDLE_SUCCESS",
+    "myComponent::FETCH_FOO::HANDLE_SUCCESS"
   ]
 ```
 
