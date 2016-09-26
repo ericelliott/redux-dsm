@@ -1,0 +1,43 @@
+{
+  "name": "redux-dsm",
+  "version": "1.0.0",
+  "description": "Declarative State Machines for Redux",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "lint": "eslint . && echo 'Lint finished...\n'",
+    "pretest": "npm run -s lint",
+    "test": "cross-env NODE_PATH='source' node source/test/index.js",
+    "watch": "watch 'clear && npm run -s test' source",
+    "update": "updtr"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericelliott/redux-dsm.git"
+  },
+  "keywords": [
+    "state",
+    "machine",
+    "redux"
+  ],
+  "author": "Eric Elliott",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericelliott/redux-dsm/issues"
+  },
+  "homepage": "https://github.com/ericelliott/redux-dsm#readme",
+  "devDependencies": {
+    "babel-cli": "6.14.0",
+    "babel-preset-node6": "11.0.0",
+    "cross-env": "3.0.0",
+    "eslint": "3.6.0",
+    "tape": "4.6.0",
+    "updtr": "0.2.1",
+    "watch": "0.19.2"
+  },
+  "dependencies": {
+    "lodash": "4.16.1"
+  }
+}
