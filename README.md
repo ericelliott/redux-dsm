@@ -4,7 +4,7 @@ Declarative State Machines for Redux
 
 ## Status
 
-Unfinished. Here be dragons.
+Developer preview / proof of concept.
 
 ## Usage Example
 
@@ -32,16 +32,20 @@ const fetchingStates = [
   ]
 ];
 
-// ({ actionStates: Array, component?: String, name?: String, delimiter?: String }) =>
-//   { actions: Array, ActionCreators: Object, Reducer: Function }
+// ({
+//   component?: String,
+//   description?: String,
+//   actionStates: Array,
+//   delimiter?: String
+// }) => { actions: Array, actionCreators: Object, reducer: Function }
 const foo = dsm({
   component: 'myComponent',
-  name: 'fetch foo',
+  description: 'fetch foo',
   actionStates: fetchingStates
 });
 ```
 
-`Actions` is an array of strings. For the above example, it returns:
+`Actions` is an array of strings. If you use the returned `.actionCreators`, you probably don't need to use these, but it's handy for debugging. For the above example, it returns:
 
 ```js
   "actions": [
@@ -55,13 +59,16 @@ const foo = dsm({
   ]
 ```
 
+## .actionCreators: Object
+
+`actionCreators` will be an object with camelCased keys and function values corresponding to your state transitions. For each transition, an action creator is created which will automatically fill in the correct action type, and pass through `payload` to the state.
+
+## .reducer: (state, action) => state
+
+`.reducer()` is a normal Redux reducer function that takes the current state and an action object, and returns the new state. Matching action objects can be created using the `.actionCreators`. The reducer can be combined with a parent reducer using `combineReducers()`. Any payload passed into an action creator will be passed through to `state.payload`.
+
 ## State
 
-The state object will have two keys, `status`, `data`. In the example above, `status` will be one of `idle`, `fetching`, `error`, or `success`.
+The state object will have two keys, `status` and `payload`. In the example above, `status` will be one of `idle`, `fetching`, `error`, or `success`.
 
-The `data` object will have a `type`, and:
-
-* In the case of no data, no additional props
-* If data exists, it will have a `value` prop with the value payload
-* If the type is `error`, it will have an `error` prop with the error details
-
+By default, the `payload` key is an object with `type: 'empty'`.
