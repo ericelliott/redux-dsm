@@ -4,7 +4,7 @@ Declarative State Machines for Redux
 
 ## Status
 
-Developer preview / proof of concept.
+Developer preview / proof of concept. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
 
 ## Usage Example
 
