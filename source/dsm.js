@@ -1,5 +1,5 @@
-import camelCase from 'lodash/camelcase';
-import snakeCase from 'lodash/snakecase';
+import camelCase from 'lodash.camelcase';
+import snakeCase from 'lodash.snakecase';
 
 const parseNode = node => {
   const data = node.slice(0, 2);

@@ -1,5 +1,5 @@
 import test from 'tape';
-import { flow as pipe } from 'lodash/fp';
+import { flow as pipe } from 'lodash';
 
 import dsm from '../dsm';
 
