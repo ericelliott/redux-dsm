@@ -6,6 +6,30 @@ Declarative State Machines for Redux
 
 Developer preview / proof of concept. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
 
+
+# Why?
+
+Your state isn't always available synchronously all the time. Some state has to be loaded asynchronously, which requires you to cycle through UI states representing concepts like fetching, processing, error, success, and idle states. In fact, a simple AJAX fetch might have up to 7 transitions leading into 4 different states:
+
+```
+Transition        Next Status
+['initialize',        'idle']
+['fetch',         'fetching']
+['cancel',            'idle']
+['report error',     'error']
+['handle error',      'idle']
+['report success', 'success']
+['handle success',    'idle']
+```
+
+Your view code will look at the status and payload to determine whether or not to render spinners, success messages, error messages, empty states, or data.
+
+Every app I've ever written needs to do this a bunch of times. Since I switched to Redux, I handle all off my view state transitions by dispatching action objects, and that requires writing a bunch of boilerplate, such as action types (e.g., `myComponent::FETCH_FOO::INITIALIZE`), and action creators (which your view or service layers can call to create actions without forcing you to import all those action type constants everywhere).
+
+This little library takes a few declarative inputs and spits out all of the boilerplate for you, including a mini reducer that you can combine with your feature-level reducers.
+
+
+
 ## Usage Example
 
 ```js
