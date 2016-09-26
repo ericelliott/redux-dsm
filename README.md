@@ -2,9 +2,10 @@
 
 Declarative State Machines for Redux
 
+
 ## Status
 
-Developer preview / proof of concept. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
+Developer preview / proof of concept / idea phase. Not production tested, yet. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
 
 
 # Why?
@@ -22,7 +23,7 @@ Transition        Next Status
 ['handle success',    'idle']
 ```
 
-Your view code will look at the status and payload to determine whether or not to render spinners, success messages, error messages, empty states, or data.
+Your view code will look at the status and payload to determine whether or not to render spinners, success messages, error messages, empty states, or data. I don't know about you, but I sometimes forget some of those transitions or states.
 
 Every app I've ever written needs to do this a bunch of times. Since I switched to Redux, I handle all off my view state transitions by dispatching action objects, and that requires writing a bunch of boilerplate, such as action types (e.g., `myComponent::FETCH_FOO::INITIALIZE`), and action creators (which your view or service layers can call to create actions without forcing you to import all those action type constants everywhere).
 
