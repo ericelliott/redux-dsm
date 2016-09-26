@@ -30,7 +30,6 @@ Every app I've ever written needs to do this a bunch of times. Since I switched 
 This little library takes a few declarative inputs and spits out all of the boilerplate for you, including a mini reducer that you can combine with your feature-level reducers.
 
 
-
 ## Usage Example
 
 ```js
@@ -89,6 +88,18 @@ const foo = dsm({
 ## .actionCreators: Object
 
 `actionCreators` will be an object with camelCased keys and function values corresponding to your state transitions. For each transition, an action creator is created which will automatically fill in the correct action type, and pass through `payload` to the state.
+
+The example fetch state machine will produce the following `actionCreators`:
+
+```js
+initialize()
+fetch()
+cancel()
+reportError()
+handleError()
+reportSuccess()
+handleSuccess()
+```
 
 ## .reducer: (state, action) => state
 
