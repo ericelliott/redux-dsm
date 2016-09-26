@@ -45,7 +45,9 @@ const foo = dsm({
 });
 ```
 
-`Actions` is an array of strings. If you use the returned `.actionCreators`, you probably don't need to use these, but it's handy for debugging. For the above example, it returns:
+## .actions: [...String]
+
+`actions` is an array of strings. If you use the returned `.actionCreators`, you probably don't need to use these, but it's handy for debugging. For the above example, it returns:
 
 ```js
   "actions": [
@@ -67,7 +69,7 @@ const foo = dsm({
 
 `.reducer()` is a normal Redux reducer function that takes the current state and an action object, and returns the new state. Matching action objects can be created using the `.actionCreators`. The reducer can be combined with a parent reducer using `combineReducers()`. Any payload passed into an action creator will be passed through to `state.payload`.
 
-## State
+## State: { status: String, payload: Any }
 
 The state object will have two keys, `status` and `payload`. In the example above, `status` will be one of `idle`, `fetching`, `error`, or `success`.
 
