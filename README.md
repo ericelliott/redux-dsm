@@ -29,6 +29,8 @@ Every app I've ever written needs to do this a bunch of times. Since I switched 
 
 This little library takes a few declarative inputs and spits out all of the boilerplate for you, including a mini reducer that you can combine with your feature-level reducers.
 
+This library is not just for AJAX, though that will be a very common use-case, and it doesn't care how you handle your async I/O. You can use it with [Sagas](https://github.com/yelouafi/redux-saga), [Ogen](https://github.com/ericelliott/ogen), etc..., or just use it by itself and manually wire up your async I/O.
+
 
 ## Usage Example
 
