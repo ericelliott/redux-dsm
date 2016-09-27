@@ -2,6 +2,10 @@
 
 Declarative State Machines for Redux: An async state boilerplate reducer.
 
+## Installation
+```sh
+npm install --save redux-dsm
+```
 
 ## Status
 
