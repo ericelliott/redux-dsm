@@ -7,6 +7,16 @@ Declarative State Machines for Redux: An async state boilerplate reducer.
 npm install --save redux-dsm
 ```
 
+And then in your file :
+```js
+import dsm from 'redux-dsm';
+```
+
+Or using CommonJS modules :
+```js
+var dsm = require('redux-dsm');
+```
+
 ## Status
 
 Developer preview / proof of concept / idea phase. Not production tested, yet. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
