@@ -2,6 +2,20 @@
 
 Declarative State Machines for Redux: An async state boilerplate reducer.
 
+## Installation
+```sh
+npm install --save redux-dsm
+```
+
+And then in your file :
+```js
+import dsm from 'redux-dsm';
+```
+
+Or using CommonJS modules :
+```js
+var dsm = require('redux-dsm');
+```
 
 ## Status
 
