@@ -2,12 +2,14 @@
   "name": "redux-dsm",
   "version": "1.0.0",
   "description": "Declarative State Machines for Redux",
-  "main": "index.js",
+  "main": "dist/dsm.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "lint": "eslint . && echo 'Lint finished...\n'",
+    "build": "webpack --mode=build",
+    "dev": "webpack --progress --colors --watch --mode=dev",
+    "lint": "eslint source && echo 'Lint finished...\n'",
     "pretest": "npm run -s lint",
     "test": "node source/test/index.js",
     "watch": "watch 'clear && npm run -s test' source",
@@ -30,12 +32,16 @@
   "homepage": "https://github.com/ericelliott/redux-dsm#readme",
   "devDependencies": {
     "babel-cli": "6.14.0",
-    "babel-preset-node6": "11.0.0",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.14.0",
     "eslint": "3.6.0",
     "lodash": "4.16.2",
     "tape": "4.6.0",
     "updtr": "0.2.1",
-    "watch": "0.19.2"
+    "watch": "0.19.2",
+    "webpack": "^1.13.2",
+    "yargs": "^5.0.0"
   },
   "dependencies": {
     "lodash.camelcase": "4.3.0",
