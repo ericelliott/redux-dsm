@@ -108,4 +108,4 @@ const dsm = ({
 
 module.exports = dsm;
 module.exports.dsm = dsm;
-module.exports.default = dp;
+module.exports.default = dsm;
