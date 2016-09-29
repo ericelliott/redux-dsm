@@ -1,5 +1,5 @@
-import camelCase from 'lodash.camelcase';
-import snakeCase from 'lodash.snakecase';
+const camelCase = require('lodash.camelcase');
+const snakeCase = require('lodash.snakecase');
 
 const parseNode = node => {
   const data = node.slice(0, 2);
@@ -106,4 +106,6 @@ const dsm = ({
   };
 };
 
-export default dsm;
+module.exports = dsm;
+module.exports.dsm = dsm;
+module.exports.default = dp;
