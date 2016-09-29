@@ -37,7 +37,7 @@ const mockOptions = ({
 
 test('modules & package specs', nest => {
   nest.test('dsm function exposed', assert => {
-    const msg = 'current file is AMD, not ready to be commonjs node package';
+    const msg = 'should export commonjs module';
     const expected = 'function';
     const actual = typeof require('../dsm');
     assert.same(actual, expected, msg);
@@ -45,7 +45,7 @@ test('modules & package specs', nest => {
   });
 
   nest.test('dsm object exposed', assert => {
-    const msg = 'expose dsm property so `import { dsm }` won\'t fail';
+    const msg = 'should export dsm property allowing `import { dsm }`';
     const expected = 'function';
     const actual = typeof require('../dsm').dsm;
     assert.same(actual, expected, msg);
