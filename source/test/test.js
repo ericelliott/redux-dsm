@@ -1,7 +1,7 @@
 import test from 'tape';
 import { flow as pipe } from 'lodash';
 
-import dsm from '../dsm';
+import { dsm } from '../dsm';
 
 const createFlatStates = () => [
   ['initialize', 'idle'],
@@ -33,6 +33,24 @@ const mockOptions = ({
   actionStates = mockStates
 } = {}) => ({
   component, description, actionStates
+});
+
+test('modules & package specs', nest => {
+  nest.test('dsm function exposed', assert => {
+    const msg = 'should export commonjs module';
+    const expected = 'function';
+    const actual = typeof require('../dsm');
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('dsm object exposed', assert => {
+    const msg = 'should export dsm property allowing `import { dsm }`';
+    const expected = 'function';
+    const actual = typeof require('../dsm').dsm;
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
 });
 
 test('dsm() action types', nest => {

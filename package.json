@@ -2,7 +2,7 @@
   "name": "redux-dsm",
   "version": "1.0.0",
   "description": "Declarative State Machines for Redux",
-  "main": "index.js",
+  "main": "./source/dsm.js",
   "directories": {
     "doc": "docs"
   },
