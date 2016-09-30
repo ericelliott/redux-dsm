@@ -1,6 +1,6 @@
 {
   "name": "redux-dsm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Declarative State Machines for Redux",
   "main": "./source/dsm.js",
   "directories": {
