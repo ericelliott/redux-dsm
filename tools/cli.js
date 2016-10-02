@@ -2,7 +2,8 @@ var colors = require('colors');
 
 /**
  * Checks node version and prints a message before tests start
- * @param {String} nodeVersion semantic version of x.x.x style
+ * Latest Nodejs or at least 6.x.x is required to run our ES6 tests
+ * @param {String} nodeVersion node semantic version
  */
 function checkNode (nodeVersion) {
   if (Number(nodeVersion.slice('.')[0]) >= 6) {
