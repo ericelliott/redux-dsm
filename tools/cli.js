@@ -12,4 +12,4 @@ function checkNode (nodeVersion) {
   }
 }
 
-module.exports.checkNode = checkNode(process.versions.node);
+module.exports = checkNode(process.versions.node);
