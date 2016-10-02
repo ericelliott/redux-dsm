@@ -1,7 +1,9 @@
-import test from 'tape';
-import { flow as pipe } from 'lodash';
-
-import { dsm } from '../dsm';
+// theirs
+const test = require('tape');
+const lodash = require('lodash');
+const pipe = lodash.flow;
+// ours
+const dsm = require('../dsm');
 
 const createFlatStates = () => [
   ['initialize', 'idle'],
