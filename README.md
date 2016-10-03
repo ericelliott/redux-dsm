@@ -53,6 +53,9 @@ This library is not just for ajax, though that will be a very common use-case, a
 
 You don't even have to use it with Redux -- anything that uses reducer-based state is fine, including [ngrx/store](https://github.com/ngrx/store) or even `Array.prototype.reduce()`.
 
+## Developers
+
+
 
 ## Usage Example
 
