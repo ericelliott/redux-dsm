@@ -4,7 +4,9 @@ Declarative State Machines for Redux: An async state boilerplate reducer.
 
 ## Status
 
-Developer preview / proof of concept / idea phase. Not production tested, yet. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
+Developer preview / proof of concept / idea phase. There is currently no ES5 build, which means that code will break on iOS <= 9 and old IE.
+
+Not production tested, yet. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
 
 
 ## Install
