@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "eslint . && echo 'Lint finished...\n'",
-    "pretest": "npm run -s lint",
+    "pretest": "npm run -s lint && node tools/cli.js",
     "test": "node source/test/index.js",
     "watch": "watch 'clear && npm run -s test' source",
     "update": "updtr"
@@ -28,9 +28,11 @@
     "url": "https://github.com/ericelliott/redux-dsm/issues"
   },
   "homepage": "https://github.com/ericelliott/redux-dsm#readme",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "devDependencies": {
-    "babel-cli": "6.14.0",
-    "babel-preset-node6": "11.0.0",
+    "colors": "^1.1.2",
     "eslint": "3.6.0",
     "lodash": "4.16.2",
     "tape": "4.6.0",
