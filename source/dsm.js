@@ -1,20 +1,10 @@
+const flow = require('lodash/fp/flow');
+const flattenDeep = require('lodash/fp/flattenDeep');
+const chunk = require('lodash/fp/chunk');
 const camelCase = require('lodash.camelcase');
 const snakeCase = require('lodash.snakecase');
 
-const parseNode = node => {
-  const data = node.slice(0, 2);
-  const child = node.slice(2);
-  return { data, child };
-};
-
-function* getStates (graph) {
-  for (let i = 0; i < graph.length; i++) {
-    const { data, child } = parseNode(graph[i]);
-
-    if (Array.isArray(data)) yield data;
-    if (Array.isArray(child)) yield* getStates(child);
-  }
-}
+const getStates = graph => flow(flattenDeep, chunk(2))(graph);
 
 const formatConstant = text => snakeCase(text).toUpperCase();
 
