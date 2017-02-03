@@ -45,7 +45,7 @@ Transition        Next Status
 
 Your view code will look at the status and payload to determine whether or not to render spinners, success messages, error messages, empty states, or data. I don't know about you, but I sometimes forget some of those transitions or states.
 
-Every app I've ever written needs to do this a bunch of times. Since I switched to Redux, I handle all off my view state transitions by dispatching action objects, and that requires writing a bunch of boilerplate, such as action types (e.g., `myComponent::FETCH_FOO::INITIALIZE`), and action creators (which your view or service layers can call to create actions without forcing you to import all those action type constants everywhere).
+Every app I've ever written needs to do this a bunch of times. Since I switched to Redux, I handle all of my view state transitions by dispatching action objects, and that requires writing a bunch of boilerplate, such as action types (e.g., `myComponent::FETCH_FOO::INITIALIZE`), and action creators (which your view or service layers can call to create actions without forcing you to import all those action type constants everywhere).
 
 This little library takes a few declarative inputs and spits out all of the boilerplate for you, including a mini reducer that you can combine with your feature-level reducers.
 
