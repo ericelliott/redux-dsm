@@ -1,24 +1,26 @@
 const camelCase = require('lodash.camelcase');
 const snakeCase = require('lodash.snakecase');
 
-const parseNode = node => {
+const parseNode = function (node) {
   const data = node.slice(0, 2);
   const child = node.slice(2);
   return { data, child };
 };
 
-const getStates = (graph, initialMemo = []) => (
-  graph.reduce((memo, node) => {
+const getStates = function (graph, initialMemo = []) {
+  return graph.reduce(function (memo, node) {
     const { data, child } = parseNode(node);
 
     if (Array.isArray(data)) memo = memo.concat([data]);
     if (Array.isArray(child)) memo = getStates(child, memo);
 
     return memo;
-  }, initialMemo)
-);
+  }, initialMemo);
+};
 
-const formatConstant = text => snakeCase(text).toUpperCase();
+const formatConstant = function (text) {
+  return snakeCase(text).toUpperCase();
+};
 
 const empty = {
   type: 'empty'
@@ -29,8 +31,8 @@ const defaultState = {
   payload: empty
 };
 
-const createReducer = (defaultState, reducerMap) => {
-  return (state = defaultState, action = {}) => {
+const createReducer = function (defaultState, reducerMap) {
+  return function (state = defaultState, action = {}) {
     const { type } = action;
     const reducer = reducerMap[type];
 
@@ -42,22 +44,22 @@ const createReducer = (defaultState, reducerMap) => {
   };
 };
 
-const getActionCreatorNames = states => {
-  return states.map(state => {
+const getActionCreatorNames = function (states) {
+  return states.map(function (state) {
     const description = state[0];
     return camelCase(description);
   });
 };
 
-const dsm = ({
+const dsm = function ({
   component = '',
   description = '',
   delimiter = '::',
   actionStates = []
-}) => {
+}) {
   const states = [...getStates(actionStates)];
 
-  const actionMap = states.map(a => {
+  const actionMap = states.map(function (a) {
     const action = component + [
       component ? delimiter : '',
       formatConstant(description),
@@ -71,10 +73,12 @@ const dsm = ({
       status
     };
   });
-  const actions = actionMap.map(a => a.action);
+  const actions = actionMap.map(function (a) {
+    return a.action;
+  });
 
-  const reducerMap = actionMap.reduce((map, a) => {
-    map[a.action] = (state = defaultState, action = {}) => {
+  const reducerMap = actionMap.reduce(function (map, a) {
+    map[a.action] = function (state = defaultState, action = {}) {
 
       if (action.type === a.action) {
         const { status } = a;
@@ -91,12 +95,15 @@ const dsm = ({
   }, {});
 
   const reducer = createReducer(defaultState, reducerMap);
+
   const actionCreatorNames = getActionCreatorNames(states);
-  const actionCreators = actionCreatorNames.reduce((acs, description, i) => {
-    acs[description] = payload => ({
-      type: actions[i],
-      payload
-    });
+  const actionCreators = actionCreatorNames.reduce(function (acs, description, i) {
+    acs[description] = function (payload) {
+      return {
+        type: actions[i],
+        payload
+      };
+    };
 
     return acs;
   }, {});
