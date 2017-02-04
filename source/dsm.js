@@ -7,14 +7,16 @@ const parseNode = node => {
   return { data, child };
 };
 
-function* getStates (graph) {
-  for (let i = 0; i < graph.length; i++) {
-    const { data, child } = parseNode(graph[i]);
+const getStates = (graph, initialMemo = []) => (
+  graph.reduce((memo, node) => {
+    const { data, child } = parseNode(node);
 
-    if (Array.isArray(data)) yield data;
-    if (Array.isArray(child)) yield* getStates(child);
-  }
-}
+    if (Array.isArray(data)) memo = memo.concat([data]);
+    if (Array.isArray(child)) memo = getStates(child, memo);
+
+    return memo;
+  }, initialMemo)
+);
 
 const formatConstant = text => snakeCase(text).toUpperCase();
 
