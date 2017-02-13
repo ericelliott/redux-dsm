@@ -1,6 +1,6 @@
 # Redux DSM
 
-Declarative State Machines for Redux: An async state boilerplate reducer.
+Declarative State Machines for Redux: Reduce your async-state boilerplate..
 
 ## Status
 
