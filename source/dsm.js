@@ -31,10 +31,9 @@ const defaultState = {
   payload: empty
 };
 
-const createReducer = (defaultState, reducerMap) => {
+const createReducer = (defaultState, parentReducerMap) => {
   return (state = defaultState, action = {}) => {
-    const { type } = action;
-    const reducer = reducerMap[type];
+    const reducer = parentReducerMap[state.status];
 
     if (typeof reducer === 'function') {
       return reducer(state, action);
@@ -77,8 +76,18 @@ const dsm = ({
   });
   const actions = actionMap.map(a => a.action);
 
+  const parentStatuses = Object.keys(actionMap.reduce((map, a) => {
+    map[a.parentStatus] = true;
+    return map;
+  }, {}));
+
+  const initialReducerMap = parentStatuses.reduce((map, status) => {
+    map[status] = {};
+    return map;
+  }, {});
+
   const reducerMap = actionMap.reduce((map, a) => {
-    map[a.action] = (state = defaultState, action = {}) => {
+    map[a.parentStatus][a.action] = (state = defaultState, action = {}) => {
 
       if (state.status === a.parentStatus && action.type === a.action) {
         const { status } = a;
@@ -92,9 +101,24 @@ const dsm = ({
       return state;
     };
     return map;
+  }, initialReducerMap);
+
+  const parentReducerMap = parentStatuses.reduce((map, status) => {
+    map[status] = (state = defaultState, action = {}) => {
+
+      const { type } = action;
+      const reducer = reducerMap[status][type];
+
+      if (typeof reducer === 'function') {
+        return reducer(state, action);
+      }
+
+      return state;
+    };
+    return map;
   }, {});
 
-  const reducer = createReducer(defaultState, reducerMap);
+  const reducer = createReducer(defaultState, parentReducerMap);
   const actionCreatorNames = getActionCreatorNames(states);
   const actionCreators = actionCreatorNames.reduce((acs, description, i) => {
     acs[description] = payload => ({
