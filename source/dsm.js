@@ -1,18 +1,20 @@
 const camelCase = require('lodash.camelcase');
 const snakeCase = require('lodash.snakecase');
 
+const defaultStatus = 'idle';
+
 const parseNode = node => {
   const data = node.slice(0, 2);
   const child = node.slice(2);
   return { data, child };
 };
 
-const getStates = (graph, initialMemo = []) => (
+const getStates = (graph, initialMemo = [], parentStatus = defaultStatus) => (
   graph.reduce((memo, node) => {
     const { data, child } = parseNode(node);
 
-    if (Array.isArray(data)) memo = memo.concat([data]);
-    if (Array.isArray(child)) memo = getStates(child, memo);
+    if (Array.isArray(data)) memo = memo.concat([data.concat([parentStatus])]);
+    if (Array.isArray(child)) memo = getStates(child, memo, data[1]);
 
     return memo;
   }, initialMemo)
@@ -25,7 +27,7 @@ const empty = {
 };
 
 const defaultState = {
-  status: 'idle',
+  status: defaultStatus,
   payload: empty
 };
 
@@ -65,10 +67,12 @@ const dsm = ({
       formatConstant(a[0])
     ].join('');
     const status = a[1];
+    const parentStatus = a[2];
 
     return {
       action,
-      status
+      status,
+      parentStatus
     };
   });
   const actions = actionMap.map(a => a.action);
@@ -76,7 +80,7 @@ const dsm = ({
   const reducerMap = actionMap.reduce((map, a) => {
     map[a.action] = (state = defaultState, action = {}) => {
 
-      if (action.type === a.action) {
+      if (state.status === a.parentStatus && action.type === a.action) {
         const { status } = a;
         const { payload } = action;
 
