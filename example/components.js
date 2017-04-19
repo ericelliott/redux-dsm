@@ -1,24 +1,35 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-const List = ({ items }) => (
+const Main = ({messages, error}) => {
+    if (error) {
+        return <div>Error!</div>
+    }
+
+    return <List messages={messages} />
+};
+
+const List = ({messages}) => (
     <ul>
-        { items.map((item, index) => (
-            <ListItem key={index}>{item.message}, {item.author}</ListItem>
+        { messages.map((message, index) => (
+            <ListItem key={index}>{message.text}, {message.author}</ListItem>
         ))}
     </ul>
 );
 
 
-const ListItem = ({ children }) => (
+const ListItem = ({children}) => (
     <li>{children}</li>
 );
 
 const mapStateToProps = (state) => {
+    const {payload: {messages = [], error} = {}} = state;
+
     return {
-        items: state.items
+        messages,
+        error
     }
 };
 
-export const App = connect(mapStateToProps)(List);
+export const App = connect(mapStateToProps)(Main);
 

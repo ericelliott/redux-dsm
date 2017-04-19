@@ -1,31 +1,20 @@
-import { getCommits } from './fetch';
+import {getCommits} from './fetch';
+import {actionCreators} from './dsm';
 
-const requestCommitsStarted = () => {
-    return {
-        type: "REQUEST_COMMITS_STARTED",
-    }
+export const fetchCommits = () => {
+    return (dispatch) => {
+        dispatch(actionCreators.fetch());
+
+        getCommits()
+            .then((json) => {
+                const messages = json.map((item) => {
+                    return {
+                        text: item.commit.message,
+                        author: item.commit.author.name
+                    };
+                });
+
+                return dispatch(actionCreators.handleSuccess(messages));
+            }).catch((error) => dispatch(actionCreators.handleError({error})));
+    };
 };
-
-const requestCommitsFinished = (json) => {
-    return {
-        type: "REQUEST_COMMITS_FINISHED",
-        items: json
-    }
-};
-
-export function fetchCommits() {
-    return function(dispatch) {
-        dispatch(requestCommitsStarted());
-
-        return getCommits().then((json) => {
-            const messages = json.map((item) => {
-                return {
-                    message: item.commit.message,
-                    author: item.commit.author.name
-                }
-            });
-
-            dispatch(requestCommitsFinished(messages))
-        });
-    }
-}
