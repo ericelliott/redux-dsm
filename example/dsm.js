@@ -1,14 +1,21 @@
 import dsm from 'redux-dsm';
 
+export const STATUS = {
+    FETCHING: 'fetching',
+    IDLE: 'idle',
+    SUCCESS: 'success',
+    ERROR: 'error'
+};
+
 const fetchingStates = [
-    ['initialize', 'idle',
-        ['fetch', 'fetching',
-            ['cancel', 'idle'],
-            ['report error', 'error',
-                ['handle error', 'idle']
+    ['initialize', STATUS.IDLE,
+        ['fetch', STATUS.FETCHING,
+            ['cancel', STATUS.IDLE],
+            ['report error', STATUS.ERROR,
+                ['handle error', STATUS.IDLE]
             ],
-            ['report success', 'success',
-                ['handle success', 'idle']
+            ['report success', STATUS.SUCCESS,
+                ['handle success', STATUS.IDLE]
             ]
         ]
     ]

@@ -1,12 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {STATUS} from './dsm';
+
 const Main = ({messages, error}) => {
     if (error) {
-        return <div>Error!</div>
+        return <div>Error!</div>;
     }
 
-    return <List messages={messages} />
+    if (messages) {
+        return <List messages={messages}/>
+    }
+
+    return <div>Loading...</div>;
 };
 
 const List = ({messages}) => (
@@ -23,11 +29,25 @@ const ListItem = ({children}) => (
 );
 
 const mapStateToProps = (state) => {
-    const {payload: {messages = [], error} = {}} = state;
+    const {list: {payload: {messages} = {}, status} = {}} = state;
 
-    return {
-        messages,
-        error
+    switch (status) {
+        case STATUS.IDLE:
+        case STATUS.SUCCESS:
+            return {
+                messages
+            };
+        case STATUS.ERROR: {
+            return {
+                error: true
+            }
+        }
+        case STATUS.FETCHING:
+        default:
+            return {
+                loading: true
+            }
+
     }
 };
 
