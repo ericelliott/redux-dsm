@@ -1,12 +1,10 @@
 # Redux DSM
 
-Declarative State Machines for Redux: An async state boilerplate reducer.
+Declarative State Machines for Redux: Reduce your async-state boilerplate..
 
 ## Status
 
-Developer preview / proof of concept / idea phase.
-
-Not production tested, yet. Currently you can transition from any state to any other state. In the future, we'll only transition to valid next states based on the state tree you pass in.
+Ready for production testing. Please kick the tires and [file an issue](https://github.com/ericelliott/redux-dsm/issues/new) if you have bug reports, suggestions, or questions.
 
 
 ## Install
@@ -51,7 +49,7 @@ This little library takes a few declarative inputs and spits out all of the boil
 
 ## Can I Use it With *x*?
 
-This library is not just for ajax, though that will be a very common use-case, and it doesn't care how you handle your async I/O. You can use it with [Sagas](https://github.com/yelouafi/redux-saga), [Ogen](https://github.com/ericelliott/ogen), etc..., or just use it by itself and manually wire up your async I/O.
+This library is not just for ajax, though that will be a very common use-case, and it doesn't care how you handle your async I/O. You can use it with [Sagas](https://github.com/yelouafi/redux-saga), redux-thunks, action creators with side-effects, etc..., or just use it by itself and manually wire up your async I/O.
 
 You don't even have to use it with Redux -- anything that uses reducer-based state is fine, including [ngrx/store](https://github.com/ngrx/store) or even `Array.prototype.reduce()`.
 
