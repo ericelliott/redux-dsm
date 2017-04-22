@@ -137,6 +137,34 @@ test('dsm() reducer', nest => {
     assert.same(actual, expected, msg);
     assert.end();
   });
+
+  nest.test('with nested state', assert => {
+    const msg = 'should transition to correct state';
+    const action = {
+      type: 'myComponent::FETCH_FOO::FETCH'
+    };
+    const reducer = dsm(mockOptions()).reducer;
+
+    const actual = reducer(undefined, action).status;
+    const expected = 'fetching';
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('with nested state', assert => {
+    const msg = 'should ignore invalid action for current state';
+    const action = {
+      type: 'myComponent::FETCH_FOO::REPORT_ERROR'
+    };
+    const reducer = dsm(mockOptions()).reducer;
+
+    const actual = reducer(undefined, action).status;
+    const expected = 'idle';
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
 });
 
 test('action creators', nest => {
