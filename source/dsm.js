@@ -58,6 +58,7 @@ const dsm = ({
   actionStates = []
 }) => {
   const states = [...getStates(actionStates)];
+  const actionNames = getActionCreatorNames(states);
 
   const actionMap = states.map(a => {
     const action = component + [
@@ -75,7 +76,10 @@ const dsm = ({
       parentStatus
     };
   });
-  const actions = actionMap.map(a => a.action);
+  const actions = actionMap.map(a => a.action).reduce((acs, action, i) => {
+    acs[actionNames[i]] = action;
+    return acs;
+  }, {});
 
   const reducerMap = actionMap.reduce((map, a) => {
     map[a.action] = (state = defaultState, action = {}) => {
@@ -95,10 +99,9 @@ const dsm = ({
   }, {});
 
   const reducer = createReducer(defaultState, reducerMap);
-  const actionCreatorNames = getActionCreatorNames(states);
-  const actionCreators = actionCreatorNames.reduce((acs, description, i) => {
+  const actionCreators = actionNames.reduce((acs, description) => {
     acs[description] = payload => ({
-      type: actions[i],
+      type: actions[description],
       payload
     });
 
