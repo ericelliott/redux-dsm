@@ -85,7 +85,7 @@ const fetchingStates = [
 //   description?: String,
 //   actionStates: Array,
 //   delimiter?: String
-// }) => { actions: Array, actionCreators: Object, reducer: Function }
+// }) => { actions: Object, actionCreators: Object, reducer: Function }
 const foo = dsm({
   component: 'myComponent',
   description: 'fetch foo',
@@ -93,20 +93,20 @@ const foo = dsm({
 });
 ```
 
-## .actions: [...String]
+## .actions: Object
 
-`actions` is an array of strings. If you use the returned `.actionCreators`, you probably don't need to use these, but it's handy for debugging. For the above example, it returns:
+`actions` is an object with camelCased keys and strings corresponding to your state transitions. If you use the returned `.actionCreators`, you probably don't need to use these, but it's handy for debugging. For the above example, it returns:
 
 ```js
-  "actions": [
-    "myComponent::FETCH_FOO::INITIALIZE",
-    "myComponent::FETCH_FOO::FETCH",
-    "myComponent::FETCH_FOO::CANCEL",
-    "myComponent::FETCH_FOO::REPORT_ERROR",
-    "myComponent::FETCH_FOO::HANDLE_ERROR",
-    "myComponent::FETCH_FOO::REPORT_SUCCESS",
-    "myComponent::FETCH_FOO::HANDLE_SUCCESS"
-  ]
+  "actions": {
+    "initialize": "myComponent::FETCH_FOO::INITIALIZE",
+    "fetch": "myComponent::FETCH_FOO::FETCH",
+    "cancel": "myComponent::FETCH_FOO::CANCEL",
+    "reportError": "myComponent::FETCH_FOO::REPORT_ERROR",
+    "handleError": "myComponent::FETCH_FOO::HANDLE_ERROR",
+    "reportSuccess": "myComponent::FETCH_FOO::REPORT_SUCCESS",
+    "handleSuccess": "myComponent::FETCH_FOO::HANDLE_SUCCESS"
+  }
 ```
 
 ## .actionCreators: Object

@@ -59,15 +59,15 @@ test('dsm() action types', nest => {
   nest.test('flat state', assert => {
     const msg = 'should return action types corresponding with given transitions';
 
-    const expected = [
-      'myComponent::FETCH_FOO::INITIALIZE',
-      'myComponent::FETCH_FOO::FETCH',
-      'myComponent::FETCH_FOO::CANCEL',
-      'myComponent::FETCH_FOO::REPORT_ERROR',
-      'myComponent::FETCH_FOO::HANDLE_ERROR',
-      'myComponent::FETCH_FOO::REPORT_SUCCESS',
-      'myComponent::FETCH_FOO::HANDLE_SUCCESS'
-    ];
+    const expected = {
+      initialize: 'myComponent::FETCH_FOO::INITIALIZE',
+      fetch: 'myComponent::FETCH_FOO::FETCH',
+      cancel: 'myComponent::FETCH_FOO::CANCEL',
+      reportError: 'myComponent::FETCH_FOO::REPORT_ERROR',
+      handleError: 'myComponent::FETCH_FOO::HANDLE_ERROR',
+      reportSuccess: 'myComponent::FETCH_FOO::REPORT_SUCCESS',
+      handleSuccess: 'myComponent::FETCH_FOO::HANDLE_SUCCESS'
+    };
     const actual = dsm(mockOptions({
       actionStates: createFlatStates()
     })).actions;
@@ -79,15 +79,15 @@ test('dsm() action types', nest => {
   nest.test('nested state', assert => {
     const msg = 'should return action types corresponding with given transitions';
 
-    const expected = [
-      'myComponent::FETCH_FOO::INITIALIZE',
-      'myComponent::FETCH_FOO::FETCH',
-      'myComponent::FETCH_FOO::CANCEL',
-      'myComponent::FETCH_FOO::REPORT_ERROR',
-      'myComponent::FETCH_FOO::HANDLE_ERROR',
-      'myComponent::FETCH_FOO::REPORT_SUCCESS',
-      'myComponent::FETCH_FOO::HANDLE_SUCCESS'
-    ];
+    const expected = {
+      initialize: 'myComponent::FETCH_FOO::INITIALIZE',
+      fetch: 'myComponent::FETCH_FOO::FETCH',
+      cancel: 'myComponent::FETCH_FOO::CANCEL',
+      reportError: 'myComponent::FETCH_FOO::REPORT_ERROR',
+      handleError: 'myComponent::FETCH_FOO::HANDLE_ERROR',
+      reportSuccess: 'myComponent::FETCH_FOO::REPORT_SUCCESS',
+      handleSuccess: 'myComponent::FETCH_FOO::HANDLE_SUCCESS'
+    };
     const actual = dsm(mockOptions()).actions;
 
     assert.same(actual, expected, msg);
