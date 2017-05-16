@@ -9,7 +9,7 @@ const Main = ({messages, error}) => {
     }
 
     if (messages) {
-        return <List messages={messages}/>
+        return <List messages={messages}/>;
     }
 
     return <div>Loading...</div>;
@@ -40,14 +40,13 @@ const mapStateToProps = (state) => {
         case STATUS.ERROR: {
             return {
                 error: true
-            }
+            };
         }
         case STATUS.FETCHING:
         default:
             return {
                 loading: true
-            }
-
+            };
     }
 };
 
