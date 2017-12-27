@@ -131,7 +131,7 @@ test('dsm() reducer', nest => {
     const actual = reducer(undefined, action);
     const expected = {
       status: 'success',
-      payload
+      action
     };
 
     assert.same(actual, expected, msg);
@@ -228,7 +228,46 @@ test('action creators', nest => {
     const actual = request.reducer(undefined, action);
     const expected = {
       status: 'success',
-      payload
+      action
+    };
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('error', assert => {
+    const msg = 'new state should reflect action errors';
+
+    const payload = new Error('fetching error');
+
+    const request = dsm(mockOptions({
+      actionStates: createFlatStates()
+    }));
+    const actual = request.actionCreators.reportError(payload);
+    const expected = {
+      type: 'myComponent::FETCH_FOO::REPORT_ERROR',
+      payload,
+      error: true
+    };
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('meta', assert => {
+    const msg = 'new state should reflect meta data';
+
+    const payload = { userId: 1 };
+    const meta = { admin: true };
+
+    const request = dsm(mockOptions({
+      actionStates: createFlatStates()
+    }));
+    const actual = request.actionCreators.reportSuccess(payload, meta);
+    const expected = {
+      type: 'myComponent::FETCH_FOO::REPORT_SUCCESS',
+      payload,
+      meta
     };
 
     assert.same(actual, expected, msg);
