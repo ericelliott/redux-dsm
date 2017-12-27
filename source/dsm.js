@@ -1,6 +1,6 @@
 const camelCase = require('lodash.camelcase');
 const snakeCase = require('lodash.snakecase');
-const isError = require('lodash').isError;
+const isError = require('lodash/isError');
 
 const defaultStatus = 'idle';
 
@@ -102,12 +102,15 @@ const dsm = ({
   const actionCreators = actionNames.reduce((acs, description) => {
     acs[description] = (payload, meta) => {
       const actionObj = {
-        type: actions[description],
-        payload
+        type: actions[description]
       };
 
-      if (isError(payload)) {
-        actionObj.error = true;
+      if (payload) {
+        actionObj.payload = payload;
+
+        if (isError(payload)) {
+          actionObj.error = true;
+        }
       }
 
       if (meta) {
