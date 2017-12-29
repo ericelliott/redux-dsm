@@ -1,5 +1,6 @@
 const camelCase = require('lodash.camelcase');
 const snakeCase = require('lodash.snakecase');
+const isError = require('lodash/isError');
 
 const defaultStatus = 'idle';
 
@@ -28,7 +29,7 @@ const empty = {
 
 const defaultState = {
   status: defaultStatus,
-  payload: empty
+  action: empty
 };
 
 const createReducer = (defaultState, reducerMap) => {
@@ -86,11 +87,10 @@ const dsm = ({
 
       if (state.status === a.parentStatus && action.type === a.action) {
         const { status } = a;
-        const { payload } = action;
 
         return Object.assign({}, state, {
           status,
-          payload
+          action
         });
       }
       return state;
@@ -100,10 +100,25 @@ const dsm = ({
 
   const reducer = createReducer(defaultState, reducerMap);
   const actionCreators = actionNames.reduce((acs, description) => {
-    acs[description] = payload => ({
-      type: actions[description],
-      payload
-    });
+    acs[description] = (payload, meta) => {
+      const actionObj = {
+        type: actions[description]
+      };
+
+      if (payload) {
+        actionObj.payload = payload;
+
+        if (isError(payload)) {
+          actionObj.error = true;
+        }
+      }
+
+      if (meta) {
+        actionObj.meta = meta;
+      }
+
+      return actionObj;
+    };
 
     return acs;
   }, {});
