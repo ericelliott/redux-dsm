@@ -1,5 +1,6 @@
 const camelCase = require('lodash.camelcase');
 const snakeCase = require('lodash.snakecase');
+const get = require('lodash.get');
 
 const defaultStatus = 'idle';
 
@@ -55,7 +56,8 @@ const dsm = ({
   component = '',
   description = '',
   delimiter = '::',
-  actionStates = []
+  actionStates = [],
+  slices = ''
 }) => {
   const states = [...getStates(actionStates)];
   const actionNames = getActionCreatorNames(states);
@@ -108,9 +110,14 @@ const dsm = ({
     return acs;
   }, {});
 
+  const selector = slices ?
+    state => get(state[camelCase(component)], slices).status :
+    state => state[camelCase(component)].status;
+
   return {
     actions,
     actionCreators,
+    selector,
     reducer
   };
 };

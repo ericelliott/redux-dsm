@@ -32,9 +32,10 @@ const mockStates = [
 const mockOptions = ({
   component = 'myComponent',
   description = 'fetch foo',
-  actionStates = mockStates
+  actionStates = mockStates,
+  slices = ''
 } = {}) => ({
-  component, description, actionStates
+  component, description, actionStates, slices
 });
 
 test('modules & package specs', nest => {
@@ -230,6 +231,105 @@ test('action creators', nest => {
       status: 'success',
       payload
     };
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+});
+
+test('dsm() selector', nest => {
+  nest.test('without providing slices value', assert => {
+    const msg = 'should return correct status given camelCase component name';
+
+    const status = 'success';
+    const state = {
+      myComponent: {
+        status,
+        payload: 'some data'
+      }
+    };
+
+    const request = dsm(mockOptions({
+      component: 'myComponent',
+      actionStates: createFlatStates()
+    }));
+    const actual = request.selector(state);
+    const expected = status;
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('without providing slices value', assert => {
+    const msg = 'should return correct status given dash-separated component name';
+
+    const status = 'success';
+    const state = {
+      myComponent: {
+        status,
+        payload: 'some data'
+      }
+    };
+
+    const request = dsm(mockOptions({
+      component: 'my-component',
+      actionStates: createFlatStates()
+    }));
+    const actual = request.selector(state);
+    const expected = status;
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('providing slices value', assert => {
+    const msg = 'should return correct status given camelCase component name';
+
+    const status = 'success';
+    const state = {
+      myComponent: {
+        slice1: {
+          slice2: {
+            status,
+            payload: 'some data'
+          }
+        }
+      }
+    };
+
+    const request = dsm(mockOptions({
+      actionStates: createFlatStates(),
+      slices: 'slice1.slice2'
+    }));
+    const actual = request.selector(state);
+    const expected = status;
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('providing slices value', assert => {
+    const msg = 'should return correct status given dash-separated component name';
+
+    const status = 'success';
+    const state = {
+      myComponent: {
+        slice1: {
+          slice2: {
+            status,
+            payload: 'some data'
+          }
+        }
+      }
+    };
+
+    const request = dsm(mockOptions({
+      component: 'my-component',
+      actionStates: createFlatStates(),
+      slices: 'slice1.slice2'
+    }));
+    const actual = request.selector(state);
+    const expected = status;
 
     assert.same(actual, expected, msg);
     assert.end();

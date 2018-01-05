@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "lodash.camelcase": "4.3.0",
+    "lodash.get": "^4.4.2",
     "lodash.snakecase": "4.1.1"
   }
 }
