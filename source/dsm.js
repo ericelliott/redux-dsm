@@ -9,6 +9,11 @@ const parseNode = node => {
   return { data, child };
 };
 
+const getDefaultStatus = (actionStates) => {
+  const status = actionStates[0][1];
+  return status ? status : defaultStatus;
+};
+
 const getStates = (graph, initialMemo = [], parentStatus = defaultStatus) => (
   graph.reduce((memo, node) => {
     const { data, child } = parseNode(node);
@@ -26,10 +31,7 @@ const empty = {
   type: 'empty'
 };
 
-const defaultState = {
-  status: defaultStatus,
-  payload: empty
-};
+
 
 const createReducer = (defaultState, reducerMap) => {
   return (state = defaultState, action = {}) => {
@@ -57,7 +59,11 @@ const dsm = ({
   delimiter = '::',
   actionStates = []
 }) => {
-  const states = [...getStates(actionStates)];
+  const defaultState = {
+    status: getDefaultStatus(actionStates),
+    payload: empty
+  };
+  const states = [...getStates(actionStates, [], defaultState.status)];
   const actionNames = getActionCreatorNames(states);
 
   const actionMap = states.map(a => {
