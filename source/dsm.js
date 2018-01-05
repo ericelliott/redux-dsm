@@ -14,7 +14,7 @@ const getDefaultStatus = (actionStates) => {
   return status ? status : defaultStatus;
 };
 
-const getStates = (graph, initialMemo = [], parentStatus = defaultStatus) => (
+const getStates = (graph, initialMemo = [], parentStatus) => (
   graph.reduce((memo, node) => {
     const { data, child } = parseNode(node);
 
