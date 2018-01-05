@@ -23,19 +23,14 @@ const { reducer, actionCreators: { initialize, signIn } } = dsm({
 });
 
 
-const createState = ({
-  status = SIGNED_OUT,
-  payload = { type: 'empty' }
-} = {}) => ({ status, payload });
-
 describe('userAuthenticationReducer', async should => {
   {
     const {assert} = should('use "signed out" as initialized state');
 
     assert({
       given: '["initialize", "signed out", /*...*/',
-      actual: reducer(),
-      expected: createState()
+      actual: reducer().status,
+      expected: SIGNED_OUT
     });
   }
 
@@ -45,8 +40,8 @@ describe('userAuthenticationReducer', async should => {
 
     assert({
       given: 'signed out initial state & signIn action',
-      actual: reducer(initialState, signIn()),
-      expected: createState({ status: 'authenticating' })
+      actual: reducer(initialState, signIn()).status,
+      expected: AUTHENTICATING
     });
   }
 });
