@@ -235,3 +235,74 @@ test('action creators', nest => {
     assert.end();
   });
 });
+
+test('dsm() createSelector', nest => {
+  nest.test('without providing slice value', assert => {
+    const msg = 'should return correct status given camelCase component name';
+
+    const status = 'success';
+    const state = {
+      myComponent: {
+        status,
+        payload: 'some data'
+      }
+    };
+
+    const request = dsm(mockOptions({
+      component: 'myComponent',
+      actionStates: createFlatStates()
+    }));
+    const selector = request.createSelector();
+    const actual = selector(state);
+    const expected = status;
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('without providing slice value', assert => {
+    const msg = 'should return correct status given dash-separated component name';
+
+    const status = 'success';
+    const state = {
+      myComponent: {
+        status,
+        payload: 'some data'
+      }
+    };
+
+    const request = dsm(mockOptions({
+      component: 'my-component',
+      actionStates: createFlatStates()
+    }));
+    const selector = request.createSelector();
+    const actual = selector(state);
+    const expected = status;
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('providing slice value', assert => {
+    const msg = 'should return correct status';
+
+    const slice = 'sliceName';
+    const status = 'success';
+    const state = {
+      [slice]: {
+        status,
+        payload: 'some data'
+      }
+    };
+
+    const request = dsm(mockOptions({
+      actionStates: createFlatStates()
+    }));
+    const selector = request.createSelector(slice);
+    const actual = selector(state);
+    const expected = status;
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+});

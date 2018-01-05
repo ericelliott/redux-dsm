@@ -108,9 +108,13 @@ const dsm = ({
     return acs;
   }, {});
 
+  const createSelector = (slice = camelCase(component)) => state =>
+    state[slice].status;
+
   return {
     actions,
     actionCreators,
+    createSelector,
     reducer
   };
 };
