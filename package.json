@@ -8,13 +8,15 @@
   },
   "scripts": {
     "lint": "eslint . && echo 'Lint finished...\n'",
-    "pretest": "npm run -s lint && node tools/cli.js",
-    "test": "node source/test/index.js",
+    "posttest": "npm run -s lint && node tools/cli.js",
+    "test": "node -r @std/esm source/test/index.js && node -r @std/esm source/test/authenticate-flow-test.js",
+    "debug": "node -r @std/esm --inspect-brk source/test/authenticate-flow-test.js",
     "watch": "watch 'clear && npm run -s test' source",
     "update": "updtr",
     "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
     "prepublish": "npm run build"
   },
+  "@std/esm":"cjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ericelliott/redux-dsm.git"
@@ -39,6 +41,7 @@
     "colors": "^1.1.2",
     "eslint": "3.6.0",
     "lodash": "4.16.2",
+    "riteway": "2.0.3",
     "tape": "4.6.0",
     "updtr": "0.2.1",
     "watch": "0.19.2"
