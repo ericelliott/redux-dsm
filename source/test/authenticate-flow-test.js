@@ -2,9 +2,12 @@ import { describe } from 'riteway';
 
 import dsm from '../dsm';
 
+const SIGNED_OUT = 'signed_out';
+const AUTHENTICATING = 'authenticating';
+
 const actionStates = [
-  ['initialize', 'signed out',
-    ['sign in', 'authenticating'
+  ['initialize', SIGNED_OUT,
+    ['sign in', AUTHENTICATING
       // ['report error', 'error',
       //   ['handle error', 'signed out']
       // ],
@@ -13,7 +16,7 @@ const actionStates = [
   ]
 ];
 
-const { initialize, reducer, signIn } = dsm({
+const { reducer, actionCreators: { initialize, signIn } } = dsm({
   component: 'user-authentication',
   description: 'authenticate user',
   actionStates
@@ -21,9 +24,9 @@ const { initialize, reducer, signIn } = dsm({
 
 
 const createState = ({
-  status = 'signed out',
-  payload: { type = 'empty'} = {}
-} = {}) => ({ status, payload: { type } });
+  status = SIGNED_OUT,
+  payload = { type: 'empty' }
+} = {}) => ({ status, payload });
 
 describe('userAuthenticationReducer', async should => {
   {
@@ -43,7 +46,7 @@ describe('userAuthenticationReducer', async should => {
     assert({
       given: 'signed out initial state & signIn action',
       actual: reducer(initialState, signIn()),
-      expected: createState()
+      expected: createState({ status: 'authenticating' })
     });
   }
 });
