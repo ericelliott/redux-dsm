@@ -27,7 +27,7 @@ const createState = ({
 
 describe('userAuthenticationReducer', async should => {
   {
-    const {assert} = should('return use "signed out" as initialized state');
+    const {assert} = should('use "signed out" as initialized state');
 
     assert({
       given: '["initialize", "signed out", /*...*/',
