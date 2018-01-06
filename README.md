@@ -32,7 +32,7 @@ Your state isn't always available synchronously all the time. Some state has to 
 
 ```
 Transition        Next Status
-['initialize',        'idle']
+['initial',           'idle']
 ['fetch',         'fetching']
 ['cancel',            'idle']
 ['report error',     'error']
@@ -43,7 +43,7 @@ Transition        Next Status
 
 Your view code will look at the status and payload to determine whether or not to render spinners, success messages, error messages, empty states, or data. I don't know about you, but I sometimes forget some of those transitions or states.
 
-Every app I've ever written needs to do this a bunch of times. Since I switched to Redux, I handle all of my view state transitions by dispatching action objects, and that requires writing a bunch of boilerplate, such as action types (e.g., `myComponent::FETCH_FOO::INITIALIZE`), and action creators (which your view or service layers can call to create actions without forcing you to import all those action type constants everywhere).
+Every app I've ever written needs to do this a bunch of times. Since I switched to Redux, I handle all of my view state transitions by dispatching action objects, and that requires writing a bunch of boilerplate, such as action types (e.g., `myComponent::FETCH_FOO::FETCH`), and action creators (which your view or service layers can call to create actions without forcing you to import all those action type constants everywhere).
 
 This little library takes a few declarative inputs and spits out all of the boilerplate for you, including a mini reducer that you can combine with your feature-level reducers.
 
@@ -66,16 +66,14 @@ import dsm from 'redux-dsm';
 // * cancel
 // * report an error
 // * report success
-const fetchingStates = [
-  ['initialize', 'idle',
-    ['fetch', 'fetching',
-      ['cancel', 'idle'],
-      ['report error', 'error',
-        ['handle error', 'idle']
-      ],
-      ['report success', 'success',
-        ['handle success', 'idle']
-      ]
+const fetchingStates = ['initial', 'idle',
+  ['fetch', 'fetching',
+    ['cancel', 'idle'],
+    ['report error', 'error',
+      ['handle error', 'idle']
+    ],
+    ['report success', 'success',
+      ['handle success', 'idle']
     ]
   ]
 ];
@@ -99,7 +97,6 @@ const foo = dsm({
 
 ```js
   "actions": {
-    "initialize": "myComponent::FETCH_FOO::INITIALIZE",
     "fetch": "myComponent::FETCH_FOO::FETCH",
     "cancel": "myComponent::FETCH_FOO::CANCEL",
     "reportError": "myComponent::FETCH_FOO::REPORT_ERROR",
@@ -116,7 +113,6 @@ const foo = dsm({
 The example fetch state machine will produce the following `actionCreators`:
 
 ```js
-initialize()
 fetch()
 cancel()
 reportError()
