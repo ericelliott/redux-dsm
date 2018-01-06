@@ -131,6 +131,7 @@ test('dsm() reducer', nest => {
     const actual = reducer(undefined, action);
     const expected = {
       status: 'success',
+      payload,
       action
     };
 
@@ -195,6 +196,25 @@ test('action creators', nest => {
   });
 
   nest.test('functions', assert => {
+    const msg = 'should handle undefined payload and meta';
+
+    const expected = {
+      type: 'myComponent::FETCH_FOO::REPORT_SUCCESS'
+    };
+
+    const pipeline = pipe(
+      dsm,
+      obj => obj.actionCreators.reportSuccess()
+    );
+    const actual = pipeline(mockOptions({
+      actionStates: createFlatStates()
+    }));
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('functions', assert => {
     const msg = 'should return correct actions';
 
     const payload = 'some data';
@@ -228,6 +248,7 @@ test('action creators', nest => {
     const actual = request.reducer(undefined, action);
     const expected = {
       status: 'success',
+      payload,
       action
     };
 
