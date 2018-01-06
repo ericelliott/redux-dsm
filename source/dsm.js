@@ -10,7 +10,7 @@ const parseNode = node => {
 };
 
 const getDefaultStatus = (actionStates) => {
-  const status = actionStates[0][1];
+  const status = actionStates[1];
   return status ? status : defaultStatus;
 };
 
