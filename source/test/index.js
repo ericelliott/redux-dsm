@@ -1,1 +1,1 @@
-require('./test');
+import './test';

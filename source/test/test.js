@@ -1,12 +1,10 @@
-// theirs
 const test = require('tape');
 const lodash = require('lodash');
 const pipe = lodash.flow;
-// ours
+
 const dsm = require('../dsm');
 
-const createFlatStates = () => [
-  ['initialize', 'idle'],
+const createFlatStates = () => ['initial', 'idle',
   ['fetch', 'fetching'],
   ['cancel', 'idle'],
   ['report error', 'error'],
@@ -15,16 +13,14 @@ const createFlatStates = () => [
   ['handle success', 'idle']
 ];
 
-const mockStates = [
-  ['initialize', 'idle',
-    ['fetch', 'fetching',
-      ['cancel', 'idle'],
-      ['report error', 'error',
-        ['handle error', 'idle']
-      ],
-      ['report success', 'success',
-        ['handle success', 'idle']
-      ]
+const mockStates = ['initial', 'idle',
+  ['fetch', 'fetching',
+    ['cancel', 'idle'],
+    ['report error', 'error',
+      ['handle error', 'idle']
+    ],
+    ['report success', 'success',
+      ['handle success', 'idle']
     ]
   ]
 ];
@@ -61,7 +57,6 @@ test('dsm() action types', nest => {
     const msg = 'should return action types corresponding with given transitions';
 
     const expected = {
-      initialize: 'myComponent::FETCH_FOO::INITIALIZE',
       fetch: 'myComponent::FETCH_FOO::FETCH',
       cancel: 'myComponent::FETCH_FOO::CANCEL',
       reportError: 'myComponent::FETCH_FOO::REPORT_ERROR',
@@ -81,7 +76,6 @@ test('dsm() action types', nest => {
     const msg = 'should return action types corresponding with given transitions';
 
     const expected = {
-      initialize: 'myComponent::FETCH_FOO::INITIALIZE',
       fetch: 'myComponent::FETCH_FOO::FETCH',
       cancel: 'myComponent::FETCH_FOO::CANCEL',
       reportError: 'myComponent::FETCH_FOO::REPORT_ERROR',
@@ -173,7 +167,6 @@ test('action creators', nest => {
     const msg = 'should return action creators with correct names';
 
     const expected = [
-      'initialize',
       'fetch',
       'cancel',
       'reportError',
