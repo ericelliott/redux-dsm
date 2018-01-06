@@ -1,8 +1,7 @@
-// theirs
 const test = require('tape');
 const lodash = require('lodash');
 const pipe = lodash.flow;
-// ours
+
 const dsm = require('../dsm');
 
 const createFlatStates = () => [
