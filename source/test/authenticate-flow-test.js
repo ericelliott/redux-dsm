@@ -2,19 +2,32 @@ import { describe } from 'riteway';
 
 import dsm from '../dsm';
 
-const SIGNED_OUT = 'signed_out';
+const SIGNED_OUT = 'signed out';
 const AUTHENTICATING = 'authenticating';
+const ERROR = 'error';
+const SIGNED_IN = 'signed in';
 
 const actionStates = ['initial', SIGNED_OUT,
-  ['sign in', AUTHENTICATING
-    // ['report error', 'error',
-    //   ['handle error', 'signed out']
-    // ],
-    // ['sign-in success', 'signed in']
+  ['sign in', AUTHENTICATING,
+    ['report sign in failure', ERROR,
+      ['handle sign in failure', SIGNED_OUT]
+    ],
+    ['report sign in success', SIGNED_IN,
+      ['sign out', SIGNED_OUT]
+    ]
+  ],
+  ['report sign in success', SIGNED_IN,
+    ['sign out', SIGNED_OUT]
   ]
 ];
 
-const { reducer, actionCreators: { signIn } } = dsm({
+const {
+  reducer,
+  actionCreators: {
+    signIn,
+    reportSignInSuccess
+  }
+} = dsm({
   component: 'user-authentication',
   description: 'authenticate user',
   actionStates
@@ -39,6 +52,17 @@ describe('userAuthenticationReducer', async should => {
       given: 'signed out initial state & signIn action',
       actual: reducer(undefined, signIn()).status,
       expected: AUTHENTICATING
+    });
+  }
+
+  {
+    const {assert} = should('transition into "signed in" state');
+    const initialState = reducer(undefined, signIn());
+
+    assert({
+      given: '"authenticating" initial state & reportSignInSuccess action',
+      actual: reducer(initialState, reportSignInSuccess()).status,
+      expected: SIGNED_IN
     });
   }
 });

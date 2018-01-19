@@ -31,18 +31,22 @@ const empty = {
   type: 'empty'
 };
 
-
+const compose = (...fns) => x => fns.reduceRight((y, f) => f(y), x);
 
 const createReducer = (defaultState, reducerMap) => {
   return (state = defaultState, action = {}) => {
     const { type } = action;
-    const reducer = reducerMap[type];
 
-    if (typeof reducer === 'function') {
-      return reducer(state, action);
-    }
+    const reducer = typeof reducerMap[type] === 'function' ?
+      compose(...reducerMap[type])(state => state) :
+      state => state
+    ;
+    /*
+      Problem #2: we need to build the reducer by combining all
+      handlers for a given type.
+    */
 
-    return state;
+    return reducer(state, action);
   };
 };
 
@@ -82,29 +86,45 @@ const dsm = ({
       parentStatus
     };
   });
+
   const actions = actionMap.map(a => a.action).reduce((acs, action, i) => {
     acs[actionNames[i]] = action;
     return acs;
   }, {});
 
+  console.log(actionMap);
+
   const reducerMap = actionMap.reduce((map, a) => {
-    map[a.action] = (state = defaultState, action = {}) => {
+    const reducer = step => (state = defaultState, action = {}) => {
 
       if (state.status === a.parentStatus && action.type === a.action) {
         const { status } = a;
         const { payload } = action;
 
-        return Object.assign({}, state, {
+        return step({
+          ...state,
           status,
           payload
-        });
+        }, action);
       }
-      return state;
+      return step(state, action);
     };
+
+    if (!map[a.action]) map[a.action] = [reducer];
+    else map[a.action].push(reducer);
+
     return map;
   }, {});
 
+
+  /*
+    SOLVED! Problem #1: We should create a handler for each action, even if there are
+    more than one of the same action type. In that case, we should have another
+    handler even if we already have one.
+  */
+
   const reducer = createReducer(defaultState, reducerMap);
+
   const actionCreators = actionNames.reduce((acs, description) => {
     acs[description] = payload => ({
       type: actions[description],
