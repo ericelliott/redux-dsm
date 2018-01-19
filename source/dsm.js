@@ -96,11 +96,10 @@ const dsm = ({
         const { status } = a;
         const { payload } = action;
 
-        return {
-          ...state,
+        return Object.assign({}, state, {
           status,
           payload
-        };
+        });
       }
 
       return state;
