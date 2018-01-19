@@ -9,8 +9,7 @@
   "scripts": {
     "lint": "eslint . && echo 'Lint finished...\n'",
     "posttest": "npm run -s lint && node tools/cli.js",
-    "oldTest": "node -r @std/esm source/test/index.js &&",
-    "test": "node -r @std/esm source/test/authenticate-flow-test.js",
+    "test": "node -r @std/esm source/test/index.js && node -r @std/esm source/test/authenticate-flow-test.js",
     "debug": "node -r @std/esm --inspect-brk source/test/test.js",
     "watch": "watch 'clear && npm run -s test' source",
     "update": "updtr",

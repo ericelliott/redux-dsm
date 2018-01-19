@@ -31,20 +31,17 @@ const empty = {
   type: 'empty'
 };
 
-const compose = (...fns) => x => fns.reduceRight((y, f) => f(y), x);
+const composeReducers = (...reducers) =>
+  reducers.reduce((step, reducer) => (a, c) => step(reducer(a, c), c));
 
 const createReducer = (defaultState, reducerMap) => {
   return (state = defaultState, action = {}) => {
     const { type } = action;
 
-    const reducer = typeof reducerMap[type] === 'function' ?
-      compose(...reducerMap[type])(state => state) :
+    const reducer = Array.isArray(reducerMap[type]) ?
+      composeReducers(...reducerMap[type]) :
       state => state
     ;
-    /*
-      Problem #2: we need to build the reducer by combining all
-      handlers for a given type.
-    */
 
     return reducer(state, action);
   };
@@ -92,22 +89,21 @@ const dsm = ({
     return acs;
   }, {});
 
-  console.log(actionMap);
-
   const reducerMap = actionMap.reduce((map, a) => {
-    const reducer = step => (state = defaultState, action = {}) => {
+    const reducer = (state = defaultState, action = {}) => {
 
       if (state.status === a.parentStatus && action.type === a.action) {
         const { status } = a;
         const { payload } = action;
 
-        return step({
+        return {
           ...state,
           status,
           payload
-        }, action);
+        };
       }
-      return step(state, action);
+
+      return state;
     };
 
     if (!map[a.action]) map[a.action] = [reducer];
@@ -115,13 +111,6 @@ const dsm = ({
 
     return map;
   }, {});
-
-
-  /*
-    SOLVED! Problem #1: We should create a handler for each action, even if there are
-    more than one of the same action type. In that case, we should have another
-    handler even if we already have one.
-  */
 
   const reducer = createReducer(defaultState, reducerMap);
 
