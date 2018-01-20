@@ -4,7 +4,7 @@ Declarative State Machines for Redux: Reduce your async-state boilerplate..
 
 ## Status
 
-Ready for production testing. Please kick the tires and [file an issue](https://github.com/ericelliott/redux-dsm/issues/new) if you have bug reports, suggestions, or questions.
+In production use on [DevAnywhere.io](https://devanywhere.io).
 
 
 ## Install
