@@ -2,6 +2,12 @@
 
 Declarative State Machines for Redux: Reduce your async-state boilerplate.
 
+Redux-dsm takes a nested array of transitions and states and automatically generates:
+
+* Reducers to manage all state transitions, complete with logic that will not let your app get into an invalid state (according to the graph you supply)
+* Action creators and action types to trigger all transitions
+* Planned (not yet implemented): Memoizing selectors for resulting states and payloads
+
 ## Status
 
 In production use on [DevAnywhere.io](https://devanywhere.io).
