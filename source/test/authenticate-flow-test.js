@@ -65,4 +65,14 @@ describe('userAuthenticationReducer', async should => {
       expected: SIGNED_IN
     });
   }
+
+  {
+    const {assert} = should('transition into "signed in" state');
+
+    assert({
+      given: '"signed out" initial state & reportSignInSuccess action',
+      actual: reducer(undefined, reportSignInSuccess()).status,
+      expected: SIGNED_IN
+    });
+  }
 });
