@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint . && echo 'Lint finished...\n'",
     "posttest": "npm run -s lint && node tools/cli.js",
-    "test": "node -r @std/esm source/test/index.js && node -r @std/esm source/test/authenticate-flow-test.js",
+    "test": "snyk test && node -r @std/esm source/test/index.js && node -r @std/esm source/test/authenticate-flow-test.js",
     "debug": "node -r @std/esm --inspect-brk source/test/test.js",
     "watch": "watch 'clear && npm run -s test' source",
     "update": "updtr",
@@ -45,7 +45,8 @@
     "riteway": "2.0.3",
     "tape": "4.6.0",
     "updtr": "0.2.1",
-    "watch": "0.19.2"
+    "watch": "0.19.2",
+    "snyk": "^1.69.5"
   },
   "dependencies": {
     "lodash.camelcase": "4.3.0",
