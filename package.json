@@ -45,7 +45,8 @@
     "riteway": "2.0.3",
     "tape": "4.6.0",
     "updtr": "0.2.1",
-    "watch": "0.19.2"
+    "watch": "0.19.2",
+    "snyk": "^1.69.5"
   },
   "dependencies": {
     "lodash.camelcase": "4.3.0",
