@@ -36,17 +36,17 @@
     "node": ">=6.0.0"
   },
   "devDependencies": {
-    "@std/esm": "0.18.0",
-    "babel-cli": "^6.22.2",
-    "babel-preset-es2015": "^6.22.0",
+    "@std/esm": "0.20.0",
+    "babel-cli": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
     "colors": "^1.1.2",
-    "eslint": "3.6.0",
-    "lodash": "4.16.2",
+    "eslint": "4.16.0",
+    "lodash": "4.17.4",
     "riteway": "2.0.3",
-    "tape": "4.6.0",
-    "updtr": "0.2.1",
-    "watch": "0.19.2",
-    "snyk": "^1.69.5"
+    "snyk": "^1.69.5",
+    "tape": "4.8.0",
+    "updtr": "2.0.0",
+    "watch": "1.0.2"
   },
   "dependencies": {
     "lodash.camelcase": "4.3.0",
