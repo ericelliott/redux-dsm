@@ -34,43 +34,47 @@ const {
 });
 
 
-describe('userAuthenticationReducer', async should => {
+describe('userAuthenticationReducer', async assert => {
   {
-    const {assert} = should('use "signed out" as initialized state');
+    const should = 'use "signed out" as initialized state';
 
     assert({
       given: '["initial", "signed out", /*...*/',
+      should,
       actual: reducer().status,
       expected: SIGNED_OUT
     });
   }
 
   {
-    const {assert} = should('transition into authenticating state');
+    const should = 'transition into authenticating state';
 
     assert({
       given: 'signed out initial state & signIn action',
+      should,
       actual: reducer(undefined, signIn()).status,
       expected: AUTHENTICATING
     });
   }
 
   {
-    const {assert} = should('transition into "signed in" state');
+    const should = 'transition into "signed in" state';
     const initialState = reducer(undefined, signIn());
 
     assert({
       given: '"authenticating" initial state & reportSignInSuccess action',
+      should,
       actual: reducer(initialState, reportSignInSuccess()).status,
       expected: SIGNED_IN
     });
   }
 
   {
-    const {assert} = should('transition into "signed in" state');
+    const should = 'transition into "signed in" state';
 
     assert({
       given: '"signed out" initial state & reportSignInSuccess action',
+      should,
       actual: reducer(undefined, reportSignInSuccess()).status,
       expected: SIGNED_IN
     });
