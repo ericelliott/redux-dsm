@@ -40,8 +40,7 @@ const createReducer = (defaultState, reducerMap) => {
 
     const reducer = Array.isArray(reducerMap[type]) ?
       composeReducers(...reducerMap[type]) :
-      state => state
-    ;
+      state => state;
 
     return reducer(state, action);
   };
@@ -122,9 +121,12 @@ const dsm = ({
     return acs;
   }, {});
 
+  const getStatus = state => state[component].status;
+
   return {
     actions,
     actionCreators,
+    getStatus,
     reducer
   };
 };
