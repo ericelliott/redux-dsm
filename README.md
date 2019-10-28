@@ -143,7 +143,7 @@ By default, the `payload` key is an object with `type: 'empty'`.
 
 ## .getStatus
 
-`getStatus` is a selector, which returns the current status. It takes into account the slice name you provided to Redux-dsm as `component`.
+`getStatus` is a selector which returns the current status. It takes into account the slice name you provided to Redux-dsm as `component`.
 
 ```js
 const slice = 'user-authentication';
