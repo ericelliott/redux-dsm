@@ -88,7 +88,12 @@ const fetchingStates = ['initial', 'idle',
 //   description?: String,
 //   actionStates: Array,
 //   delimiter?: String
-// }) => { actions: Object, actionCreators: Object, reducer: Function }
+// }) => { 
+//   actions: Object,
+//   actionCreators: Object,
+//   getStatus: Function,
+//   reducer: Function
+// }
 const foo = dsm({
   component: 'myComponent',
   description: 'fetch foo',
@@ -135,3 +140,21 @@ handleSuccess()
 The state object will have two keys, `status` and `payload`. In the example above, `status` will be one of `idle`, `fetching`, `error`, or `success`.
 
 By default, the `payload` key is an object with `type: 'empty'`.
+
+## .getStatus
+
+`getStatus` is a selector, which returns the current status. It takes into account the slice name you provided to Redux-dsm as `component`.
+
+```js
+const slice = 'user-authentication';
+
+const foo = dsm({
+  component: slice,
+  description: 'fetch foo',
+  actionStates: fetchingStates
+});
+
+const rootReducer = combineReducers({ [slice]: foo.reducer });
+
+getStatus(rootReducer()); // returns initial status of foo
+```

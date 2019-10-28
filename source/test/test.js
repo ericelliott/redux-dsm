@@ -228,3 +228,35 @@ test('action creators', nest => {
     assert.end();
   });
 });
+
+test('selectors', nest => {
+  nest.test('getStatus with the default state', assert => {
+    const msg = 'should return the correct state';
+
+    const { reducer, getStatus } = dsm(mockOptions());
+    const rootState = { [mockOptions().component]: reducer() };
+
+    const expected = 'idle';
+
+    const actual = getStatus(rootState);
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+
+  nest.test('functions with state', assert => {
+    const msg = 'should return the correct state';
+
+    const { actionCreators, reducer, getStatus } = dsm(mockOptions());
+    const rootState = {
+      [mockOptions().component]: reducer(undefined, actionCreators.fetch())
+    };
+
+    const expected = 'fetching';
+
+    const actual = getStatus(rootState);
+
+    assert.same(actual, expected, msg);
+    assert.end();
+  });
+});

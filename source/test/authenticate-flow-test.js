@@ -7,6 +7,8 @@ const AUTHENTICATING = 'authenticating';
 const ERROR = 'error';
 const SIGNED_IN = 'signed in';
 
+const slice = 'user-authentication';
+
 const actionStates = ['initial', SIGNED_OUT,
   ['sign in', AUTHENTICATING,
     ['report sign in failure', ERROR,
@@ -26,9 +28,10 @@ const {
   actionCreators: {
     signIn,
     reportSignInSuccess
-  }
+  },
+  getStatus
 } = dsm({
-  component: 'user-authentication',
+  component: slice,
   description: 'authenticate user',
   actionStates
 });
@@ -41,7 +44,7 @@ describe('userAuthenticationReducer', async assert => {
     assert({
       given: '["initial", "signed out", /*...*/',
       should,
-      actual: reducer().status,
+      actual: getStatus({ [slice]: reducer() }),
       expected: SIGNED_OUT
     });
   }
@@ -52,7 +55,7 @@ describe('userAuthenticationReducer', async assert => {
     assert({
       given: 'signed out initial state & signIn action',
       should,
-      actual: reducer(undefined, signIn()).status,
+      actual: getStatus({ [slice]: reducer(undefined, signIn()) }),
       expected: AUTHENTICATING
     });
   }
@@ -64,7 +67,7 @@ describe('userAuthenticationReducer', async assert => {
     assert({
       given: '"authenticating" initial state & reportSignInSuccess action',
       should,
-      actual: reducer(initialState, reportSignInSuccess()).status,
+      actual: getStatus({ [slice]: reducer(initialState, reportSignInSuccess()) }),
       expected: SIGNED_IN
     });
   }
@@ -75,7 +78,7 @@ describe('userAuthenticationReducer', async assert => {
     assert({
       given: '"signed out" initial state & reportSignInSuccess action',
       should,
-      actual: reducer(undefined, reportSignInSuccess()).status,
+      actual: getStatus({ [slice]: reducer(undefined, reportSignInSuccess()) }),
       expected: SIGNED_IN
     });
   }
