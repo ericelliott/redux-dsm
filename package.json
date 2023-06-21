@@ -45,7 +45,7 @@
     "riteway": "3.0.0",
     "snyk": "1.101.1",
     "tape": "4.9.1",
-    "updtr": "3.1.0",
+    "updtr": "4.0.0",
     "watch": "1.0.2"
   },
   "dependencies": {
